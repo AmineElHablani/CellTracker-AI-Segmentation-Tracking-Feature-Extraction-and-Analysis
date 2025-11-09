@@ -39,7 +39,7 @@ This project was developed for **quantitative live-cell imaging workflows** and 
 |------|---------|
 | **Cellpose (`model_type="nuclei"`)** | Segmentation |
 | **U-Net++ (`encoder=resnet34`)** | Segmentation |
-| **Mask R-CNN (ResNet50-FPN)** | Final segmentation choice |
+| **Mask R-CNN (`ResNet50-FPN`)** | Final segmentation choice |
 
 ---
 
