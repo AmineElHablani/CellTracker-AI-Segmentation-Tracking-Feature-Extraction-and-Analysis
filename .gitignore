@@ -1,3 +1,4 @@
 data/dashboard-testing-data/*test.zip" 
 data/dhashboard-testing-data/*train.zip" 
 tmp/OutputData/*
+models/maskrcnn_hela_v0.pth
