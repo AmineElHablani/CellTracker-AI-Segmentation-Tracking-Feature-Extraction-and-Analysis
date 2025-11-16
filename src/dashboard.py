@@ -204,11 +204,6 @@ with col1:
     st.markdown("**🟤 Raw Video**")
     st.video(st.session_state['raw_video_bytes'], format="video/mp4")
 
-    # raw_path = os.path.abspath(st.session_state['raw_video_bytes'])
-    # with open(raw_path, "rb") as f:
-    #     st.video(f.read(), format="video/mp4")
-
-
 
 with col2:
     st.markdown("**🟢 Labeled Video**")
