@@ -92,9 +92,16 @@ def process_video(zip_file, _model, thr=0.35, fps_out=5, database=dashboard_resu
     os.makedirs(os.path.join(database, "segmentated_videos"), exist_ok=True)      
     video_path = os.path.join(database, "segmentated_videos", f"{video_id}.mp4")
 
+    # video_bytes = create_video_from_images(labeled_masks,
+    #                                    output_file=video_path,
+    #                                    return_bytes=True)
     video_bytes = create_video_from_images(labeled_masks,
                                        output_file=video_path,
-                                       return_bytes=True)
+                                       return_bytes=False)
+
+    segmented_fixed = video_bytes.replace(".mp4", "_fixed.mp4")
+    fix_mp4_for_browser(video_bytes, segmented_fixed)
+
     #save raw images
     raw_images_path = os.path.join(database,"raw_images",video_id)
     stable_image_dir = save_extracted_images(image_folder,raw_images_path)
@@ -105,13 +112,18 @@ def process_video(zip_file, _model, thr=0.35, fps_out=5, database=dashboard_resu
     raw_video_path = os.path.join(database,"raw_videos",f"{video_id}.mp4")
     raw_video_bytes = create_video_from_raw_images( stable_image_dir, output_file=raw_video_path, return_bytes=False)
 
+    raw_fixed = raw_video_bytes.replace(".mp4", "_fixed.mp4")
+    fix_mp4_for_browser(raw_video_bytes, raw_fixed)
+
+
     #dataframe
     os.makedirs(os.path.join(database, "datasets"), exist_ok=True)    
     dataframe_path = os.path.join(database, "datasets", f"{video_id}.csv")
     advanced_features = extract_advanced_features(tracks, mitosis)
     df = save_features_to_csv(advanced_features, dataframe_path)
 
-    return df, video_bytes, raw_video_bytes
+    # return df, video_bytes, raw_video_bytes
+    return df, segmented_fixed, raw_fixed
 
 
 
@@ -191,6 +203,12 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("**🟤 Raw Video**")
     st.video(st.session_state['raw_video_bytes'], format="video/mp4")
+
+    # raw_path = os.path.abspath(st.session_state['raw_video_bytes'])
+    # with open(raw_path, "rb") as f:
+    #     st.video(f.read(), format="video/mp4")
+
+
 
 with col2:
     st.markdown("**🟢 Labeled Video**")

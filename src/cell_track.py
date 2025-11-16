@@ -324,6 +324,20 @@ def extract_images_from_video(
 
 
 
+import subprocess, os
+
+def fix_mp4_for_browser(input_mp4, output_mp4):
+    subprocess.run([
+        "ffmpeg", "-y",
+        "-i", input_mp4,
+        "-vcodec", "libx264",
+        "-pix_fmt", "yuv420p",
+        "-preset", "medium",
+        "-crf", "22",
+        output_mp4
+    ])
+
+
 
 
 def create_video_from_images(
@@ -424,7 +438,8 @@ def create_video_from_raw_images(
     h,  w  = first.shape[:2]
 
     # open VideoWriter (best codecs first)
-    for fourcc_str in ("avc1", "H264", "X264", "mp4v"):
+    # for fourcc_str in ("avc1", "H264", "X264", "mp4v"):
+    for fourcc_str in ("mp4v", "avc1", "H264", "X264"):
         fourcc = cv2.VideoWriter_fourcc(*fourcc_str)
         video  = cv2.VideoWriter(output_file, fourcc, fps, (w, h))
         if video.isOpened():
