@@ -12,7 +12,9 @@ from glob import glob
 from stqdm import stqdm
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device('cpu')
+
 
 # safe TIFF reader
 def safe_read(path):
@@ -68,7 +70,7 @@ def preprocess_fluo(img_np):
 
     img_t = torch.from_numpy(img_np).permute(2, 0, 1).float()  # C,H,W
     return img_t
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 

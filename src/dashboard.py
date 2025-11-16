@@ -33,11 +33,12 @@ st.title('🧬 Cell‑Tracking Dashboard')
 
 
 
-try:
-    device                               
-except NameError:              
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# try:
+#     device                               
+# except NameError:              
+#     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+device = torch.device('cpu')
 
 @st.cache_data(show_spinner="🔬 Running full pipeline …", ttl=0)
 def process_video(zip_file, _model, thr=0.35, fps_out=5, database=dashboard_results_path):
